@@ -29,6 +29,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/chat', [ChatController::class, "index"])->name('chat');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/chat/rooms', [ChatController::class, "rooms"]);
 
-Route::get('/chat/room/{roomId}/messages', [ChatController::class, "messages"]);
+Route::middleware(['auth:sanctum', 'verified'])->get('/chat/room/{roomId}/messages', [ChatController::class, "messages"]);
+
+Route::middleware(['auth:sanctum', 'verified'])->post('/chat/{roomId}/message', [ChatController::class, "newMessage"]);
