@@ -1,7 +1,17 @@
 <template>
     <app-layout>
+        <template #header>
+            <div>
+                <chat-room-selection
+                    :rooms="chatRooms"
+                    :currentRoom="currentRoom"
+                    v-on:roomChanged="setRoom($event)"
+                />
+            </div>
+        </template>
         <message-container :messages="messages"/>
-        <input-message/>
+        <input-message :room="currentRoom"
+            v-on:messagesent="getMessages"/>
     </app-layout>
 </template>
 
@@ -9,17 +19,21 @@
 import AppLayout from '@/Layouts/AppLayout.vue'
 import MessageContainer from './messageContainer.vue'
 import InputMessage from './inputMessage.vue'
+import ChatRoomSelection from './chatRoomSelection.vue'
 import axios from 'axios'
+
+
 export default {
   components: {
       AppLayout,
       MessageContainer,
-      InputMessage
+      InputMessage,
+      ChatRoomSelection
     },
     data() {
         return {
             chatRooms : [],
-            currentRoom : '',
+            currentRoom : {},
             messages : [],
         }
     },
