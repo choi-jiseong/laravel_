@@ -24,14 +24,14 @@ import ChatRoomSelection from './chatRoomSelection.vue'
 import StyledMessageContainer from './styledMessageContainer.vue'
 import axios from 'axios'
 
-
 export default {
-  components: {
-      AppLayout,
-      MessageContainer,
-      InputMessage,
-      ChatRoomSelection,
-      StyledMessageContainer
+    components: {
+        AppLayout,
+        MessageContainer,
+        InputMessage,
+        ChatRoomSelection,
+        StyledMessageContainer,
+
     },
     data() {
         return {
