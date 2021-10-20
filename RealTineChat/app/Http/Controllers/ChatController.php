@@ -20,12 +20,16 @@ class ChatController extends Controller
         return Inertia::render('Chat/container');
     }
 
+    public function indexV2() {
+        return Inertia::render('Chat/containerV2');
+    }
+
     public function rooms() {
         return ChatRoom::all();
     }
 
     public function messages($roomId) {
-        $msgs =  ChatMessage::where('chat_room_id', $roomId)->with('user')->latest()->get(); //with절을 사용해서 관계된 사용자의 정보도 받아올 수 있다.
+        $msgs =  ChatMessage::where('chat_room_id', $roomId)->with('user')->latest()->paginate(3); //with절을 사용해서 관계된 사용자의 정보도 받아올 수 있다.
         // $msgs[0]->user->name;
         //lazy loading(default) VS eager loading
         // dd($msgs);
@@ -41,7 +45,8 @@ class ChatController extends Controller
             'message' => $request->message,
         ]);
 
-        broadcast(new NewChatMessage($msg->chat_room_id))->toOthers();
+        $msg->load('user');
+        broadcast(new NewChatMessage($msg))->toOthers();
 
         return $msg;
     }
