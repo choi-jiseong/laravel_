@@ -25,7 +25,7 @@ class ChatController extends Controller
     }
 
     public function messages($roomId) {
-        $msgs =  ChatMessage::where('chat_room_id', $roomId)->with('user')->latest()->paginate(10)->get(); //with절을 사용해서 관계된 사용자의 정보도 받아올 수 있다.
+        $msgs =  ChatMessage::where('chat_room_id', $roomId)->with('user')->latest()->get(); //with절을 사용해서 관계된 사용자의 정보도 받아올 수 있다.
         // $msgs[0]->user->name;
         //lazy loading(default) VS eager loading
         // dd($msgs);
