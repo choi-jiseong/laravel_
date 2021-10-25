@@ -2,7 +2,7 @@
     <app-layout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                {{ username }}
             </h2>
         </template>
 
@@ -22,6 +22,7 @@
     import Welcome from '@/Jetstream/Welcome.vue'
 
     export default defineComponent({
+        props :  ['username'],
         components: {
             AppLayout,
             Welcome,
