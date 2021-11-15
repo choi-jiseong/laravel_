@@ -7,14 +7,14 @@
                 </div>
                 <div class="flex-col justify-items-start">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">
-                        {{ username }}
+                        {{ user.name }}
                     </h2>
                     <div class="mb-4 flex flex-row">
                         <div class="mr-10">게시물 4</div>
                         <div class="mr-10">팔로워 80</div>
                         <div class="mr-10">팔로우 72</div>
                     </div>
-                    <div class="mb-4">ㅎㅇㅎㅇ</div>
+                    <div class="mb-4">{{ user.username }}</div>
                     <div class="mb-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas aliquam optio eos quos facere aperiam soluta laboriosam aut explicabo itaque.</div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
     import PostList from '@/Pages/Instagram/PostList.vue'
 
     export default defineComponent({
-        props :  ['username'],
+        props :  ['user'],
         components: {
             AppLayout,
             PostList,
