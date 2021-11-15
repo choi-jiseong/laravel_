@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfilesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,3 +37,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/profiles/{name}', [Profil
 // Route::resource('/profiles', ProfilesController::class)->except(['create', 'edit']);
 
 Route::apiResource('/profiles', ProfilesController::class);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/post/create', [PostsController::class, 'create'])->name('post.create');
