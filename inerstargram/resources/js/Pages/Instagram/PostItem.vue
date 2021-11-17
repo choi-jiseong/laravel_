@@ -1,6 +1,6 @@
 <template>
     <div class="rounded overflow-hidden shadow-lg">
-      <a @click="imgClicked()"><img class="w-full" src="/mountain.jpg" alt="Mountain"></a>
+      <a @click="imgClicked()"><img class="w-full" :src="'/storage/'+post.image" :alt="post.image"></a>
       <div class="flex flex-row px-6 py-4">
           <button class="pr-4">
               dsf
@@ -12,7 +12,7 @@
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">Mountain</div>
         <p class="text-gray-700 text-base">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+          {{ post.caption }}
         </p>
       </div>
       <div class="px-6 pt-4 pb-2">
@@ -37,8 +37,17 @@
 <script>
 import JetConfirmModal from '@/Jetstream/ConfirmationModal.vue'
 export default {
+    props : ['post'],
     components : {
         JetConfirmModal,
+    },
+    methods: {
+        imgClicked() {
+
+        }
+    },
+    created() {
+        // console.log(this.post.image);
     }
 }
 </script>
