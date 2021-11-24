@@ -28,7 +28,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard', ['user'=> Auth::user(), 'posts' => Auth::user()->posts]);
+    return Inertia::render('Dashboard', ['user'=> Auth::user(), 'posts' => Auth::user()->posts, 'can' => ['create_update' => true], 'viewed_user' => Auth::user()]);
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/profiles/{name}', [ProfilesController::class, 'index']);
@@ -42,3 +42,5 @@ Route::apiResource('/profiles', ProfilesController::class);
 // Route::middleware(['auth:sanctum', 'verified'])->get('/post/create', [PostsController::class, 'create'])->name('post.create');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/post/store', [PostsController::class, 'store'])->name('post.store');
+
+Route::middleware(['auth:sanctum', 'verified'])->patch('/profile/updtae', [ProfilesController::class, 'update'])->name('profile.update');

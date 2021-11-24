@@ -30,6 +30,17 @@ class User extends Authenticatable
         'username',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->profile()->create([
+                'title' => $user->username,
+                'description' => 'No description',
+            ]);
+        });
+    }
+
     protected $with = ['profile'];
 
     /**

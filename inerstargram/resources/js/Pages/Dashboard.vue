@@ -1,25 +1,28 @@
 <template>
     <app-layout title="Dashboard">
         <template #header>
-            <div class="flex flex-row items-start">
+            <div class="flex flex-row items-start md:flex-row">
                 <div class="flex-shrink-0 mr-3 px-40" v-if="$page.props.jetstream.managesProfilePhotos">
-                    <img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" class="rounded-full h-40 w-40 object-cover">
+                    <img :src="$page.props.viewed_user.profile_photo_url" :alt="$page.props.viewed_user.name" class="rounded-full h-40 w-40 object-cover">
                 </div>
                 <div class="flex-col justify-items-start">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">
-                        {{ user.name }}
+                        {{ viewed_user.name }}
                     </h2>
                     <!-- <Link :href="route('post.create')"> -->
+                    <div v-if="can.create_update==true">
                         <jet-secondary-button class="mb-4" @click="createNewPost=true">Add New Post</jet-secondary-button>
+                        <jet-secondary-button class="mb-4" @click="editProfile=true">Edit Profile</jet-secondary-button>
+                    </div>
                     <!-- </Link> -->
                     <div class="mb-4 flex flex-row">
                         <div class="mr-10">게시물 <span class="font-black">{{ posts.length }}</span></div>
                         <div class="mr-10">팔로워 <span class="font-black">80</span></div>
                         <div class="mr-10">팔로우 <span class="font-black">72</span></div>
                     </div>
-                    <div class="mb-4">{{ user.username }}</div>
-                    <div class="mb-4">{{ user.profile ? user.profile.title : 'No Title' }}</div>
-                    <div class="mb-4">{{ user.profile ? user.profile.description : 'No Description' }}</div>
+                    <div class="mb-4">{{ viewed_user.username }}</div>
+                    <div class="mb-4">{{ viewed_user.profile ? viewed_user.profile.title : 'No Title' }}</div>
+                    <div class="mb-4">{{ viewed_user.profile ? viewed_user.profile.description : 'No Description' }}</div>
                 </div>
             </div>
         </template>
@@ -68,6 +71,30 @@
             </jet-secondary-button>
         </template>
     </jet-dialog-modal>
+    <jet-dialog-modal :show="editProfile" @close="editProfile = false" >
+        <template #title>
+
+        </template>
+        <template #content>
+            <form @submit.prevent="updateProfile">
+                <div class="mb-2">
+                    <jet-label for="title" value="title" />
+                    <jet-input id="title" type="text" class="block w-full mt-1" v-model="user.profile.title" required autofocus autocomplete="title" />
+                    <jet-input-error :message="updateProfileForm.errors.title" class="mt-2" />
+                </div>
+                <div class="mb-2">
+                    <jet-label for="description" value="description" />
+                    <textarea id="description" cols="40" rows="10" class="form-textarea" v-model="user.profile.description" required autofocus autocomplete="description"></textarea>
+                    <jet-input-error :message="updateProfileForm.errors.description" class="mt-2" />
+                </div>
+            </form>
+        </template>
+        <template #footer>
+            <jet-secondary-button @click.prevent="updateProfile">
+                Update Profile
+            </jet-secondary-button>
+        </template>
+    </jet-dialog-modal>
     </app-layout>
 </template>
 
@@ -83,7 +110,7 @@
     import JetLabel from '@/Jetstream/Label.vue'
 
     export default defineComponent({
-        props :  ['user', 'posts'],
+        props :  ['user', 'posts', 'can', 'viewed_user'],
         components: {
             AppLayout,
             PostList,
@@ -104,6 +131,13 @@
                 }),
                 createNewPost: false,
                 imagePreview : null,
+                editProfile : false,
+
+                updateProfileForm : this.$inertia.form({
+                    _method : 'PATCH',
+                    title : '',
+                    description : '',
+                })
             }
         },
 
@@ -140,6 +174,15 @@
 
             selectNewImage() {
                 this.$refs.image.click();
+            },
+            updateProfile() {
+                this.updateProfileForm.description = this.user.profile.description;
+                this.updateProfileForm.title = this.user.profile.title;
+                this.updateProfileForm.post(route('profile.update'), {
+                    errorBag : 'updateProfile',
+                    preserveScroll : true,
+                    onSuccess : () => {this.clearUpdateProfileFields();},
+                })
             }
         },
     })
