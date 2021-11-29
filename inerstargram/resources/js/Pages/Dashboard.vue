@@ -182,7 +182,11 @@
                     errorBag : 'updateProfile',
                     preserveScroll : true,
                     onSuccess : () => {this.clearUpdateProfileFields();},
-                })
+                });
+
+            },
+            clearUpdateProfileFields() {
+                this.editProfile = false;
             }
         },
     })

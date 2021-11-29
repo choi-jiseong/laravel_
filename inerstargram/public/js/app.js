@@ -20663,6 +20663,9 @@ __webpack_require__.r(__webpack_exports__);
           _this3.clearUpdateProfileFields();
         }
       });
+    },
+    clearUpdateProfileFields: function clearUpdateProfileFields() {
+      this.editProfile = false;
     }
   }
 }));

@@ -1575,11 +1575,11 @@ select {
 .p-6 {
 	padding: 1.5rem;
 }
-.p-10 {
-	padding: 2.5rem;
-}
 .p-3 {
 	padding: 0.75rem;
+}
+.p-10 {
+	padding: 2.5rem;
 }
 .px-4 {
 	padding-left: 1rem;
@@ -1728,9 +1728,6 @@ select {
 }
 .font-black {
 	font-weight: 900;
-}
-.font-bold {
-	font-weight: 700;
 }
 .uppercase {
 	text-transform: uppercase;
